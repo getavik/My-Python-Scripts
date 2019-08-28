@@ -11,7 +11,7 @@ import random
 from tqdm import tqdm
 import requests
 
-url = "https://github.com/getavik/My-SourceFiles/Metric Definition List Text.txt"
+url = "https://github.com/getavik/My-SourceFiles/blob/master/Metric%20Definition%20List%20Text.txt"
 response = requests.get(url, stream=True)
 
 with open("10MB", "wb") as handle:
