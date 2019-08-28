@@ -7,9 +7,17 @@ from sklearn.metrics.pairwise import cosine_similarity
 import nltk
 import string
 import random
-import os
+--import os
+from tqdm import tqdm
+import requests
 
-os.chdir('C:\\Users\\avikmukherjee\\Desktop\\My FIs\\Finance Master')
+url = "https://github.com/getavik/My-SourceFiles/Metric Definition List Text.txt"
+response = requests.get(url, stream=True)
+
+with open("10MB", "wb") as handle:
+    for data in tqdm(response.iter_content()):
+        handle.write(data)
+--os.chdir('C:\\Users\\avikmukherjee\\Desktop\\My FIs\\Finance Master')
 f=open('Metric Definition List Text.txt','r',errors = 'ignore')
 raw=f.read()
 raw=raw.lower()# converts to lowercase
