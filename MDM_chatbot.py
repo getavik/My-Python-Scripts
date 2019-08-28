@@ -7,7 +7,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import nltk
 import string
 import random
-#import os
+import os
 from tqdm import tqdm
 import requests
 
