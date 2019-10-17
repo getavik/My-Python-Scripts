@@ -1,27 +1,26 @@
 #This is a basic chatbot which can be used to interact with a file and answer simple queries
 #Author: Avik Mukherjee
+#Date: October 2019
+#Version: 1.0
 #------------------------------------------------------------------------------------------
-
+#Change History:
+#------------------------------------------------------------------------------------------
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import nltk
 import string
 import random
 import os
-from tqdm import tqdm
 import requests
+from os import getcwd
 
-url = "https://github.com/getavik/My-SourceFiles/blob/master/Metric%20Definition%20List%20Text.txt"
-response = requests.get(url, stream=True)
-
-with open("10MB", "wb") as handle:
-    for data in tqdm(response.iter_content()):
-        handle.write(data)
-#os.chdir('C:\\Users\\avikmukherjee\\Desktop\\My FIs\\Finance Master')
-f=open('Metric Definition List Text.txt','r',errors = 'ignore')
-raw=f.read()
+url = "https://raw.github.com/getavik/My-SourceFiles/master/Metric%20Definition%20List%20Text.txt"
+response = requests.get(url,verify = False)
+directory = getcwd()
+filename = directory + '\\Metric Definition List Text.txt'
+f = open(filename,'w')
+raw = response.text
 raw=raw.lower()# converts to lowercase
-
 try:
     nltk.data.find('tokenizers/punkt')
     nltk.data.find(os.path.join('corpora', 'wordnet'))
@@ -50,8 +49,6 @@ def greeting(sentence):
         if word.lower() in GREETING_INPUTS:
             return random.choice(GREETING_RESPONSES)
 
-#user_response="What is a chatbot"
-
 def response(user_response):
     robo_response=''
     sent_tokens.append(user_response)
@@ -70,7 +67,7 @@ def response(user_response):
         robo_response = robo_response+sent_tokens[idx]
         return robo_response
 flag=True
-print("SENSEI: My name is SENSEI. I will answer your queries about Finance Master MDM. If you want to exit, type Bye!")
+print("SENSEI: Hi There! Please shoot your queries. If you want to exit, type Bye!")
 while(flag==True):
     user_response = input()
     user_response=user_response.lower()
@@ -87,4 +84,4 @@ while(flag==True):
                 sent_tokens.remove(user_response)
     else:
         flag=False
-        print("SENSEI: Bye! take care..")
+        print("SENSEI: Bye! take care...")
